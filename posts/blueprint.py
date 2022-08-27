@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask import render_template
-from models import Post
+from models import *
 
 posts = Blueprint('posts', __name__, template_folder='templates')
 
@@ -13,3 +13,8 @@ def posts_list():
 def post_detail(slug):
   post = Post.query.filter(Post.slug==slug).first()
   return render_template('posts/post_detail.html', post=post)
+
+@posts.route('/tags/<slug>')
+def tag_detail(slug):
+  tag =Tag.query.filter(Tag.slug==slug).first()
+  return render_template('posts/tag_detail.html', tag=tag)

@@ -1,5 +1,27 @@
 {% extends 'base.html' %} {% block title %} Posts lists {% endblock %} {% block
 content %}
 <h1>Posts</h1>
-{% for post in posts %} {% include 'posts/includes/card.html' %} {% endfor %} {%
-endblock %}
+{% for post in pages.items %} {% include 'posts/includes/card.html' %} {% endfor
+%}
+
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if not pages.has_prev %} disabled {% endif %}">
+      <a class="page-link" href="./?page={{ pages.prev_num }}">Previous</a>
+    </li>
+
+    {% for page in pages.iter_pages() %}
+    <li class="page-item {% if page == pages.page %} active {% endif %}">
+      <a class="page-link" href="./?page={{ page }}"
+        >{{ page }} <span class="sr-only"></span
+      ></a>
+    </li>
+    {% endfor %}
+
+    <li class="page-item {% if not pages.has_next %} disabled {% endif %}">
+      <a class="page-link" href="./?page={{ pages.next_num }}">Next</a>
+    </li>
+  </ul>
+</nav>
+
+{% endblock %}

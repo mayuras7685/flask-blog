@@ -6,12 +6,15 @@ from flask import redirect
 from flask import url_for
 from models import *
 from posts.forms import PostForm
+from flask_security import login_required
+
 from app import db
 
 posts = Blueprint('posts', __name__, template_folder='templates')
 
 #These fuction create new post
 @posts.route('/create', methods=['POST', 'GET'])
+@login_required
 def post_create():
   form =PostForm()
 
@@ -62,6 +65,7 @@ def tag_detail(slug):
   return render_template('posts/tag_detail.html', tag=tag)
 
 @posts.route('/<slug>/edit', methods=['POST', 'GET'])
+@login_required
 def post_update(slug):
   post = Post.query.filter(Post.slug==slug).first()
 

@@ -56,18 +56,18 @@ def posts_list():
 
 @posts.route('/<slug>')
 def post_detail(slug):
-  post = Post.query.filter(Post.slug==slug).first()
+  post = Post.query.filter(Post.slug==slug).first_or_404()
   return render_template('posts/post_detail.html', post=post)
 
 @posts.route('/tags/<slug>')
 def tag_detail(slug):
-  tag =Tag.query.filter(Tag.slug==slug).first()
+  tag =Tag.query.filter(Tag.slug==slug).first_or_404()
   return render_template('posts/tag_detail.html', tag=tag)
 
 @posts.route('/<slug>/edit', methods=['POST', 'GET'])
 @login_required
 def post_update(slug):
-  post = Post.query.filter(Post.slug==slug).first()
+  post = Post.query.filter(Post.slug==slug).first_or_404()
 
   if request.method == 'POST':
     form = PostForm(formdata=request.form, obj=post)
